@@ -1,0 +1,25 @@
+version: '3'
+
+vars:
+  BUILD_DIR: build
+
+
+tasks:
+  cmake:
+    cmds:
+      - cmake -B {{.BUILD_DIR}} -S . -GNinja
+    sources:
+      - ./CMakeLists.txt
+    generates:
+      - ./{{.BUILD_DIR}}/CMakeCache.txt
+  build:
+    cmds:
+      - task: cmake
+      - cmake --build {{.BUILD_DIR}}
+  run:
+    cmds:
+      - task: build
+      - ./{{.BUILD_DIR}}/main
+  clean:
+    cmds:
+      - rm -r ./{{.BUILD_DIR}}

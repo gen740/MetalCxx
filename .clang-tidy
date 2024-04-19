@@ -1,0 +1,42 @@
+Checks: >-
+  cert-*,
+  clang-analyzer-*,
+  clang-diagnostic-*,
+  bugprone-*,
+  cppcoreguidelines-*,
+  google-*,
+  modernize-*,
+  misc-*,
+  openmp-*,
+  performance-*,
+  readability-*,
+  -readability-identifier-length,
+  -*-avoid-c-arrays,
+  -bugprone-easily-swappable-parameters,
+  -cert-err58-cpp,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -misc-non-private-member-variables-in-classes,
+  -readability-function-cognitive-complexity,
+  -readability-magic-numbers,
+  -readability-redundant-declaration,
+  -misc-include-cleaner,
+WarningsAsErrors: ''
+HeaderFileExtensions:
+  - ''
+  - h
+  - hh
+  - hpp
+  - hxx
+ImplementationFileExtensions:
+  - c
+  - cc
+  - cpp
+  - cxx
+HeaderFilterRegex: '^(?!.*\/build.*\/).*'
+SystemHeaders:   false
+FormatStyle: file
+CheckOptions:
+  readability-identifier-naming.ClassMethodCase: 'camelBack'
