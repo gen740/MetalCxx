@@ -16,6 +16,7 @@ tasks:
     cmds:
       - task: cmake
       - cmake --build {{.BUILD_DIR}}
+      - ./gen_compile_db.py ./{{.BUILD_DIR}}/compile_commands.json -b ./{{.BUILD_DIR}} -o compile_commands.json -ninjatool=ninja
   run:
     cmds:
       - task: build

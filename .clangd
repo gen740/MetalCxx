@@ -3,6 +3,8 @@ CompileFlags:
     - -Wall
     - -Wextra
     - -std=c++23
+    - -DSWIFT_PRIVATE_ATTR=__attribute__((swift_private))
+    - -I/Library/Developer/CommandLineTools/usr/lib/swift
   CompilationDatabase: ./build
 
 Diagnostics:
