@@ -13,10 +13,6 @@ class MetalViewCoordinator: NSObject, MTKViewDelegate {
     commandQueue.makeCommandBuffer()!
   }
 
-  func makeFunction(_ name: String) -> MTLFunction? {
-    library.makeFunction(name: name)
-  }
-
   struct Vertex {
     var position: simd_float3
     var color: simd_float4
@@ -37,16 +33,18 @@ class MetalViewCoordinator: NSObject, MTKViewDelegate {
     } catch {
       fatalError()
     }
+
     commandQueue = device.makeCommandQueue()
-    super.init()
 
     let desc = MTLRenderPipelineDescriptor()
     desc.colorAttachments[0].pixelFormat = .bgra8Unorm
-    desc.vertexFunction = makeFunction("vertex_function")
-    desc.fragmentFunction = makeFunction("fragment_function")
+    desc.vertexFunction = library.makeFunction(name: "vertex_function")
+    desc.fragmentFunction = library.makeFunction(name: "fragment_function")
     renderPipelineState = try! device.makeRenderPipelineState(descriptor: desc)
     vertexBuffer = device.makeBuffer(
       bytes: vertices, length: MemoryLayout<Vertex>.stride * vertices.count, options: [])
+
+    super.init()
   }
 
   func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
@@ -55,7 +53,7 @@ class MetalViewCoordinator: NSObject, MTKViewDelegate {
   }
 
   func draw(in view: MTKView) {
-    let cmdbuf = makeCommandBuffer()
+    let cmdbuf = commandQueue.makeCommandBuffer()!
     let cmdenc = cmdbuf.makeRenderCommandEncoder(descriptor: view.currentRenderPassDescriptor!)!
     cmdenc.setRenderPipelineState(renderPipelineState)
     cmdenc.setVertexBuffer(vertexBuffer, offset: 0, index: 0)

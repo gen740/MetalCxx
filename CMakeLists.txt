@@ -24,9 +24,9 @@ include(AddSwift)
 file(GLOB METALCXX_SWIFT_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.swift)
 
 _swift_generate_cxx_header_target(
-  app_swift_h
-  SwiftApp
-  "${CMAKE_CURRENT_BINARY_DIR}/include/app-swift.h"
+  swiftui_h
+  SwiftUI_swift
+  "${CMAKE_CURRENT_BINARY_DIR}/include/SwiftUI-swift.h"
   SOURCES
   ${METALCXX_SWIFT_SOURCES}
   SEARCH_PATHS
@@ -34,10 +34,10 @@ _swift_generate_cxx_header_target(
 
 add_library(swift_app STATIC ${METALCXX_SWIFT_SOURCES})
 target_link_libraries(swift_app PRIVATE "-framework AppKit")
-add_dependencies(swift_app app_swift_h)
+add_dependencies(swift_app swiftui_h)
 target_include_directories(swift_app
                            PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/include")
-set_target_properties(swift_app PROPERTIES Swift_MODULE_NAME "SwiftApp")
+set_target_properties(swift_app PROPERTIES Swift_MODULE_NAME "SwiftUI_swift")
 target_compile_options(
   swift_app
   PUBLIC "$<$<COMPILE_LANGUAGE:Swift>:-cxx-interoperability-mode=default>")
@@ -48,7 +48,7 @@ add_custom_command(
     $<TARGET_FILE:Python3::Interpreter>
     ${CMAKE_CURRENT_LIST_DIR}/gen_compile_db.py ARGS -b
     ${CMAKE_CURRENT_BINARY_DIR} -s ${CMAKE_CURRENT_SOURCE_DIR} -o
-    ${CMAKE_CURRENT_SOURCE_DIR}/compile_commands.json -ninjatool
+    ${CMAKE_CURRENT_LIST_DIR}/compile_commands.json -ninjatool
     ${CMAKE_MAKE_PROGRAM} ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json
   DEPENDS ${CMAKE_CURRENT_LIST_DIR}/gen_compile_db.py
           ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json

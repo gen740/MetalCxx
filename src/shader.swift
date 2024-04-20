@@ -1,4 +1,5 @@
-public let shader = """
+public let shader =
+  """
   #include <metal_stdlib>
   using namespace metal;
 
