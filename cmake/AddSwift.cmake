@@ -32,7 +32,7 @@ function(_swift_generate_cxx_header_target target module header)
       ${CMAKE_Swift_COMPILER} -frontend -typecheck ${ARG_SEARCH_PATHS}
       ${ARG_SOURCES} ${SDK_FLAGS} -module-name "${module}"
       -cxx-interoperability-mode=default -emit-clang-header-path "${header}"
-    DEPENDS ${ARG_DEPENDS}
+    DEPENDS ${ARG_DEPENDS} ${ARG_SOURCES}
     COMMENT "Generating '${header}'")
 
   add_custom_target("${target}" DEPENDS "${header}")

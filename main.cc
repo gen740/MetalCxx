@@ -1,9 +1,13 @@
-#include "SwiftUI-swift.h"
+#include <fitsio.h>
 
-#include <print>
+import Metalic;
 
 auto main() -> int {
-  std::println("{}", "Hello, World");
-  SwiftUI_swift::run();
+
+  auto app = Metalic::App();
+
+  app.run();
+
+  // Metalic::test();
   return 0;
 }

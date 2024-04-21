@@ -28,7 +28,7 @@ struct ContentView: View {
   var body: some View {
     VStack {
       Text("Triangle").bold()
-      MetalView()
+      MetalView().frame(width: 500, height: 500)
       Button("Quit") {
         NSApplication.shared.terminate(self)
       }
@@ -38,8 +38,12 @@ struct ContentView: View {
   }
 }
 
-struct CxxApp: App {
+struct MetalicImpl: App {
+
+  init() {}
+
   @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
   var body: some Scene {
     WindowGroup {
       ContentView()
@@ -47,7 +51,15 @@ struct CxxApp: App {
   }
 }
 
-public func run() {
-  print("Start")
-  CxxApp.main()
+public class MetalicApp {
+  required public init() {}
+
+  public func run() {
+    MetalicImpl.main()
+  }
+
+  public static func getInstance() -> Self {
+    return Self()
+  }
+
 }
